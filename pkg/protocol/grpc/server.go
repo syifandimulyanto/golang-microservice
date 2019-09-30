@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/syifandimulyanto/go-microservice/pkg/api/v1"
+	"github.com/syifandimulyanto/golang-microservice/pkg/api/v1"
 )
 
 // RunServer runs gRPC service to publish ToDo service

@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/syifandimulyanto/go-microservice/pkg/api/v1"
+	"github.com/syifandimulyanto/golang-microservice/pkg/api/v1"
 )
 
 const (

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/syifandimulyanto/go-microservice/pkg/cmd"
+	"github.com/syifandimulyanto/golang-microservice/pkg/cmd"
 )
 
 func main() {
