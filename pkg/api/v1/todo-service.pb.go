@@ -3,14 +3,17 @@
 
 package v1
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import timestamp "github.com/golang/protobuf/ptypes/timestamp"
-
 import (
-	context "golang.org/x/net/context"
+	context "context"
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	timestamp "github.com/golang/protobuf/ptypes/timestamp"
+	_ "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -22,10 +25,10 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// Taks we have to do
-type ToDo struct {
+// Task we have to do
+type Todo struct {
 	// Unique integer identifier of the todo task
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Title of the task
@@ -39,52 +42,53 @@ type ToDo struct {
 	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *ToDo) Reset()         { *m = ToDo{} }
-func (m *ToDo) String() string { return proto.CompactTextString(m) }
-func (*ToDo) ProtoMessage()    {}
-func (*ToDo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{0}
-}
-func (m *ToDo) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ToDo.Unmarshal(m, b)
-}
-func (m *ToDo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ToDo.Marshal(b, m, deterministic)
-}
-func (dst *ToDo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ToDo.Merge(dst, src)
-}
-func (m *ToDo) XXX_Size() int {
-	return xxx_messageInfo_ToDo.Size(m)
-}
-func (m *ToDo) XXX_DiscardUnknown() {
-	xxx_messageInfo_ToDo.DiscardUnknown(m)
+func (m *Todo) Reset()         { *m = Todo{} }
+func (m *Todo) String() string { return proto.CompactTextString(m) }
+func (*Todo) ProtoMessage()    {}
+func (*Todo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80b701c7b1c502fe, []int{0}
 }
 
-var xxx_messageInfo_ToDo proto.InternalMessageInfo
+func (m *Todo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Todo.Unmarshal(m, b)
+}
+func (m *Todo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Todo.Marshal(b, m, deterministic)
+}
+func (m *Todo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Todo.Merge(m, src)
+}
+func (m *Todo) XXX_Size() int {
+	return xxx_messageInfo_Todo.Size(m)
+}
+func (m *Todo) XXX_DiscardUnknown() {
+	xxx_messageInfo_Todo.DiscardUnknown(m)
+}
 
-func (m *ToDo) GetId() int64 {
+var xxx_messageInfo_Todo proto.InternalMessageInfo
+
+func (m *Todo) GetId() int64 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *ToDo) GetTitle() string {
+func (m *Todo) GetTitle() string {
 	if m != nil {
 		return m.Title
 	}
 	return ""
 }
 
-func (m *ToDo) GetDescription() string {
+func (m *Todo) GetDescription() string {
 	if m != nil {
 		return m.Description
 	}
 	return ""
 }
 
-func (m *ToDo) GetReminder() *timestamp.Timestamp {
+func (m *Todo) GetReminder() *timestamp.Timestamp {
 	if m != nil {
 		return m.Reminder
 	}
@@ -96,7 +100,7 @@ type CreateRequest struct {
 	// API versioning: it is my best practice to specify version explicitly
 	Api string `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
 	// Task entity to add
-	ToDo                 *ToDo    `protobuf:"bytes,2,opt,name=toDo,proto3" json:"toDo,omitempty"`
+	Todo                 *Todo    `protobuf:"bytes,2,opt,name=todo,proto3" json:"todo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -106,16 +110,17 @@ func (m *CreateRequest) Reset()         { *m = CreateRequest{} }
 func (m *CreateRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRequest) ProtoMessage()    {}
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{1}
+	return fileDescriptor_80b701c7b1c502fe, []int{1}
 }
+
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateRequest.Unmarshal(m, b)
 }
 func (m *CreateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateRequest.Marshal(b, m, deterministic)
 }
-func (dst *CreateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateRequest.Merge(dst, src)
+func (m *CreateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateRequest.Merge(m, src)
 }
 func (m *CreateRequest) XXX_Size() int {
 	return xxx_messageInfo_CreateRequest.Size(m)
@@ -133,9 +138,9 @@ func (m *CreateRequest) GetApi() string {
 	return ""
 }
 
-func (m *CreateRequest) GetToDo() *ToDo {
+func (m *CreateRequest) GetTodo() *Todo {
 	if m != nil {
-		return m.ToDo
+		return m.Todo
 	}
 	return nil
 }
@@ -155,16 +160,17 @@ func (m *CreateResponse) Reset()         { *m = CreateResponse{} }
 func (m *CreateResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateResponse) ProtoMessage()    {}
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{2}
+	return fileDescriptor_80b701c7b1c502fe, []int{2}
 }
+
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateResponse.Unmarshal(m, b)
 }
 func (m *CreateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateResponse.Marshal(b, m, deterministic)
 }
-func (dst *CreateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateResponse.Merge(dst, src)
+func (m *CreateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateResponse.Merge(m, src)
 }
 func (m *CreateResponse) XXX_Size() int {
 	return xxx_messageInfo_CreateResponse.Size(m)
@@ -204,16 +210,17 @@ func (m *ReadRequest) Reset()         { *m = ReadRequest{} }
 func (m *ReadRequest) String() string { return proto.CompactTextString(m) }
 func (*ReadRequest) ProtoMessage()    {}
 func (*ReadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{3}
+	return fileDescriptor_80b701c7b1c502fe, []int{3}
 }
+
 func (m *ReadRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadRequest.Unmarshal(m, b)
 }
 func (m *ReadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadRequest.Marshal(b, m, deterministic)
 }
-func (dst *ReadRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadRequest.Merge(dst, src)
+func (m *ReadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadRequest.Merge(m, src)
 }
 func (m *ReadRequest) XXX_Size() int {
 	return xxx_messageInfo_ReadRequest.Size(m)
@@ -243,7 +250,7 @@ type ReadResponse struct {
 	// API versioning: it is my best practice to specify version explicitly
 	Api string `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
 	// Task entity read by ID
-	ToDo                 *ToDo    `protobuf:"bytes,2,opt,name=toDo,proto3" json:"toDo,omitempty"`
+	Todo                 *Todo    `protobuf:"bytes,2,opt,name=todo,proto3" json:"todo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -253,16 +260,17 @@ func (m *ReadResponse) Reset()         { *m = ReadResponse{} }
 func (m *ReadResponse) String() string { return proto.CompactTextString(m) }
 func (*ReadResponse) ProtoMessage()    {}
 func (*ReadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{4}
+	return fileDescriptor_80b701c7b1c502fe, []int{4}
 }
+
 func (m *ReadResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadResponse.Unmarshal(m, b)
 }
 func (m *ReadResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadResponse.Marshal(b, m, deterministic)
 }
-func (dst *ReadResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadResponse.Merge(dst, src)
+func (m *ReadResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadResponse.Merge(m, src)
 }
 func (m *ReadResponse) XXX_Size() int {
 	return xxx_messageInfo_ReadResponse.Size(m)
@@ -280,9 +288,9 @@ func (m *ReadResponse) GetApi() string {
 	return ""
 }
 
-func (m *ReadResponse) GetToDo() *ToDo {
+func (m *ReadResponse) GetTodo() *Todo {
 	if m != nil {
-		return m.ToDo
+		return m.Todo
 	}
 	return nil
 }
@@ -292,7 +300,7 @@ type UpdateRequest struct {
 	// API versioning: it is my best practice to specify version explicitly
 	Api string `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
 	// Task entity to update
-	ToDo                 *ToDo    `protobuf:"bytes,2,opt,name=toDo,proto3" json:"toDo,omitempty"`
+	Todo                 *Todo    `protobuf:"bytes,2,opt,name=todo,proto3" json:"todo,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -302,16 +310,17 @@ func (m *UpdateRequest) Reset()         { *m = UpdateRequest{} }
 func (m *UpdateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{5}
+	return fileDescriptor_80b701c7b1c502fe, []int{5}
 }
+
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateRequest.Unmarshal(m, b)
 }
 func (m *UpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateRequest.Marshal(b, m, deterministic)
 }
-func (dst *UpdateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateRequest.Merge(dst, src)
+func (m *UpdateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateRequest.Merge(m, src)
 }
 func (m *UpdateRequest) XXX_Size() int {
 	return xxx_messageInfo_UpdateRequest.Size(m)
@@ -329,9 +338,9 @@ func (m *UpdateRequest) GetApi() string {
 	return ""
 }
 
-func (m *UpdateRequest) GetToDo() *ToDo {
+func (m *UpdateRequest) GetTodo() *Todo {
 	if m != nil {
-		return m.ToDo
+		return m.Todo
 	}
 	return nil
 }
@@ -352,16 +361,17 @@ func (m *UpdateResponse) Reset()         { *m = UpdateResponse{} }
 func (m *UpdateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{6}
+	return fileDescriptor_80b701c7b1c502fe, []int{6}
 }
+
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateResponse.Unmarshal(m, b)
 }
 func (m *UpdateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_UpdateResponse.Marshal(b, m, deterministic)
 }
-func (dst *UpdateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateResponse.Merge(dst, src)
+func (m *UpdateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateResponse.Merge(m, src)
 }
 func (m *UpdateResponse) XXX_Size() int {
 	return xxx_messageInfo_UpdateResponse.Size(m)
@@ -401,16 +411,17 @@ func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
 func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{7}
+	return fileDescriptor_80b701c7b1c502fe, []int{7}
 }
+
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteRequest.Unmarshal(m, b)
 }
 func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
 }
-func (dst *DeleteRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteRequest.Merge(dst, src)
+func (m *DeleteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteRequest.Merge(m, src)
 }
 func (m *DeleteRequest) XXX_Size() int {
 	return xxx_messageInfo_DeleteRequest.Size(m)
@@ -451,16 +462,17 @@ func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
 func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{8}
+	return fileDescriptor_80b701c7b1c502fe, []int{8}
 }
+
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteResponse.Unmarshal(m, b)
 }
 func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
 }
-func (dst *DeleteResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteResponse.Merge(dst, src)
+func (m *DeleteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteResponse.Merge(m, src)
 }
 func (m *DeleteResponse) XXX_Size() int {
 	return xxx_messageInfo_DeleteResponse.Size(m)
@@ -498,16 +510,17 @@ func (m *ReadAllRequest) Reset()         { *m = ReadAllRequest{} }
 func (m *ReadAllRequest) String() string { return proto.CompactTextString(m) }
 func (*ReadAllRequest) ProtoMessage()    {}
 func (*ReadAllRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{9}
+	return fileDescriptor_80b701c7b1c502fe, []int{9}
 }
+
 func (m *ReadAllRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadAllRequest.Unmarshal(m, b)
 }
 func (m *ReadAllRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadAllRequest.Marshal(b, m, deterministic)
 }
-func (dst *ReadAllRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadAllRequest.Merge(dst, src)
+func (m *ReadAllRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadAllRequest.Merge(m, src)
 }
 func (m *ReadAllRequest) XXX_Size() int {
 	return xxx_messageInfo_ReadAllRequest.Size(m)
@@ -530,7 +543,7 @@ type ReadAllResponse struct {
 	// API versioning: it is my best practice to specify version explicitly
 	Api string `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
 	// List of all todo tasks
-	ToDos                []*ToDo  `protobuf:"bytes,2,rep,name=toDos,proto3" json:"toDos,omitempty"`
+	Todos                []*Todo  `protobuf:"bytes,2,rep,name=todos,proto3" json:"todos,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -540,16 +553,17 @@ func (m *ReadAllResponse) Reset()         { *m = ReadAllResponse{} }
 func (m *ReadAllResponse) String() string { return proto.CompactTextString(m) }
 func (*ReadAllResponse) ProtoMessage()    {}
 func (*ReadAllResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_todo_service_4f7b6d3911418310, []int{10}
+	return fileDescriptor_80b701c7b1c502fe, []int{10}
 }
+
 func (m *ReadAllResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReadAllResponse.Unmarshal(m, b)
 }
 func (m *ReadAllResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReadAllResponse.Marshal(b, m, deterministic)
 }
-func (dst *ReadAllResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReadAllResponse.Merge(dst, src)
+func (m *ReadAllResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReadAllResponse.Merge(m, src)
 }
 func (m *ReadAllResponse) XXX_Size() int {
 	return xxx_messageInfo_ReadAllResponse.Size(m)
@@ -567,15 +581,15 @@ func (m *ReadAllResponse) GetApi() string {
 	return ""
 }
 
-func (m *ReadAllResponse) GetToDos() []*ToDo {
+func (m *ReadAllResponse) GetTodos() []*Todo {
 	if m != nil {
-		return m.ToDos
+		return m.Todos
 	}
 	return nil
 }
 
 func init() {
-	proto.RegisterType((*ToDo)(nil), "v1.ToDo")
+	proto.RegisterType((*Todo)(nil), "v1.Todo")
 	proto.RegisterType((*CreateRequest)(nil), "v1.CreateRequest")
 	proto.RegisterType((*CreateResponse)(nil), "v1.CreateResponse")
 	proto.RegisterType((*ReadRequest)(nil), "v1.ReadRequest")
@@ -586,6 +600,56 @@ func init() {
 	proto.RegisterType((*DeleteResponse)(nil), "v1.DeleteResponse")
 	proto.RegisterType((*ReadAllRequest)(nil), "v1.ReadAllRequest")
 	proto.RegisterType((*ReadAllResponse)(nil), "v1.ReadAllResponse")
+}
+
+func init() { proto.RegisterFile("todo-service.proto", fileDescriptor_80b701c7b1c502fe) }
+
+var fileDescriptor_80b701c7b1c502fe = []byte{
+	// 691 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xc1, 0x4f, 0xdb, 0x3e,
+	0x18, 0x55, 0xd2, 0x52, 0xe0, 0x2b, 0x2d, 0xfc, 0x0c, 0x3f, 0xad, 0xeb, 0xd0, 0x16, 0xe5, 0x84,
+	0xaa, 0x35, 0xa1, 0x1d, 0x62, 0x52, 0x87, 0x06, 0x0c, 0x34, 0xed, 0x9c, 0xb1, 0xcb, 0x6e, 0x26,
+	0x36, 0xa9, 0x51, 0x6a, 0x87, 0xd8, 0x2d, 0x43, 0x13, 0x97, 0x1d, 0x38, 0x4f, 0xdb, 0x6d, 0xff,
+	0xd6, 0xfe, 0x85, 0x5d, 0x77, 0xd8, 0x7f, 0x30, 0xc5, 0x4e, 0x0a, 0x01, 0xca, 0x65, 0x17, 0x88,
+	0x9f, 0xdf, 0xf7, 0xde, 0xfb, 0xec, 0xaf, 0x06, 0xa4, 0x04, 0x11, 0x5d, 0x49, 0xd3, 0x09, 0x0b,
+	0xa9, 0x97, 0xa4, 0x42, 0x09, 0x64, 0x4f, 0x7a, 0xed, 0x67, 0x91, 0x10, 0x51, 0x4c, 0x7d, 0x8d,
+	0x1c, 0x8f, 0x4f, 0x7c, 0xc5, 0x46, 0x54, 0x2a, 0x3c, 0x4a, 0x0c, 0xa9, 0xbd, 0x9e, 0x13, 0x70,
+	0xc2, 0x7c, 0xcc, 0xb9, 0x50, 0x58, 0x31, 0xc1, 0x65, 0xbe, 0xfb, 0x5c, 0xff, 0x0b, 0xbb, 0x11,
+	0xe5, 0x5d, 0x79, 0x8e, 0xa3, 0x88, 0xa6, 0xbe, 0x48, 0x34, 0xe3, 0x2e, 0xdb, 0xbd, 0xb2, 0xa0,
+	0x7a, 0x24, 0x88, 0x40, 0x4d, 0xb0, 0x19, 0x69, 0x59, 0x8e, 0xb5, 0x51, 0x09, 0x6c, 0x46, 0xd0,
+	0x1a, 0xcc, 0x29, 0xa6, 0x62, 0xda, 0xb2, 0x1d, 0x6b, 0x63, 0x31, 0x30, 0x0b, 0xe4, 0x40, 0x9d,
+	0x50, 0x19, 0xa6, 0x4c, 0x0b, 0xb6, 0x2a, 0x7a, 0xef, 0x26, 0x84, 0xb6, 0x61, 0x21, 0xa5, 0x23,
+	0xc6, 0x09, 0x4d, 0x5b, 0x55, 0xc7, 0xda, 0xa8, 0xf7, 0xdb, 0x9e, 0xc9, 0xeb, 0x15, 0x0d, 0x79,
+	0x47, 0x45, 0x43, 0xc1, 0x94, 0xeb, 0xee, 0x42, 0xe3, 0x20, 0xa5, 0x58, 0xd1, 0x80, 0x9e, 0x8d,
+	0xa9, 0x54, 0x68, 0x05, 0x2a, 0x38, 0x61, 0x3a, 0xd1, 0x62, 0x90, 0x7d, 0xa2, 0x75, 0xa8, 0x66,
+	0x47, 0xa6, 0x13, 0xd5, 0xfb, 0x0b, 0xde, 0xa4, 0xe7, 0x65, 0xd1, 0x03, 0x8d, 0xba, 0x7d, 0x68,
+	0x16, 0x02, 0x32, 0x11, 0x5c, 0xd2, 0x7b, 0x14, 0x4c, 0x93, 0x76, 0xd1, 0xa4, 0xeb, 0x43, 0x3d,
+	0xa0, 0x98, 0xcc, 0xb6, 0xbc, 0x5d, 0xf0, 0x1a, 0x96, 0x4c, 0xc1, 0x4c, 0x8b, 0x87, 0x43, 0xee,
+	0x42, 0xe3, 0x43, 0x42, 0xfe, 0xa1, 0xcb, 0x1d, 0x68, 0x16, 0x02, 0x33, 0x23, 0xb4, 0x60, 0x7e,
+	0xac, 0x39, 0x45, 0xf2, 0x62, 0xe9, 0xf6, 0xa0, 0x71, 0x48, 0x63, 0xfa, 0x90, 0xfd, 0xed, 0x8e,
+	0x77, 0xa0, 0x59, 0x94, 0x3c, 0x64, 0x48, 0x34, 0x67, 0x6a, 0x98, 0x2f, 0x5d, 0x17, 0x9a, 0xd9,
+	0x79, 0xed, 0xc7, 0xf1, 0x4c, 0x47, 0xf7, 0x00, 0x96, 0xa7, 0x9c, 0x99, 0x16, 0x4f, 0x61, 0x2e,
+	0xeb, 0x5f, 0xb6, 0x6c, 0xa7, 0x52, 0x3a, 0x16, 0x03, 0xf7, 0xbf, 0x56, 0xa0, 0x7e, 0x24, 0x0e,
+	0xc5, 0x7b, 0xf3, 0x73, 0x42, 0xef, 0x60, 0x3e, 0x17, 0x45, 0x28, 0xe3, 0x96, 0x53, 0xb4, 0x57,
+	0x4b, 0x98, 0x71, 0x75, 0xd7, 0xbe, 0xfc, 0xfc, 0xf5, 0xdd, 0x6e, 0xa2, 0x25, 0x7f, 0xd2, 0xf3,
+	0x33, 0x59, 0x1f, 0xc7, 0x31, 0x3a, 0x84, 0x9a, 0x99, 0x2b, 0xf4, 0x5f, 0x56, 0x54, 0x1a, 0xd2,
+	0x36, 0xba, 0x09, 0xe5, 0x32, 0xab, 0x5a, 0xa6, 0xe1, 0x2e, 0x14, 0x32, 0x03, 0xab, 0x83, 0xf6,
+	0xa0, 0x9a, 0xd9, 0xa1, 0xe5, 0xc2, 0xb8, 0x50, 0x58, 0xb9, 0x06, 0xf2, 0xfa, 0xff, 0x75, 0xfd,
+	0x32, 0x6a, 0x4c, 0x63, 0x7c, 0x66, 0xe4, 0x12, 0x45, 0x50, 0x33, 0x37, 0x6f, 0x72, 0x94, 0xc6,
+	0xc8, 0xe4, 0x28, 0x0f, 0x86, 0xbb, 0xad, 0x75, 0x36, 0xdb, 0xe8, 0x5a, 0x27, 0xfb, 0xeb, 0x31,
+	0x72, 0x39, 0xb0, 0x3a, 0x1f, 0x1f, 0xf5, 0xef, 0xdf, 0x40, 0x6f, 0xa1, 0x66, 0x6e, 0xdc, 0x18,
+	0x95, 0x06, 0xc6, 0x18, 0x95, 0x07, 0xa2, 0x08, 0xdc, 0x29, 0x07, 0x7e, 0xf3, 0xc7, 0xfa, 0xb6,
+	0xff, 0xdb, 0x42, 0x57, 0x16, 0x2c, 0x65, 0x37, 0xe5, 0xe4, 0x2f, 0x9d, 0x7b, 0x06, 0x4f, 0x22,
+	0x11, 0x63, 0x1e, 0x75, 0x47, 0x2c, 0x4c, 0x45, 0x0e, 0x3b, 0x49, 0x2a, 0x4e, 0x69, 0xa8, 0xd0,
+	0xcb, 0xa1, 0x52, 0x89, 0x1c, 0xf8, 0x7e, 0xc4, 0xd4, 0x70, 0x7c, 0xec, 0x85, 0x62, 0xe4, 0xcb,
+	0x0b, 0x76, 0x82, 0x39, 0x61, 0xa3, 0x71, 0x7c, 0x81, 0xb9, 0x12, 0xfe, 0x3d, 0x02, 0xed, 0xc7,
+	0x05, 0x6b, 0x2f, 0x66, 0x5c, 0x61, 0x39, 0xca, 0xbe, 0x53, 0xe6, 0x31, 0xd2, 0xaf, 0xf4, 0xbc,
+	0xcd, 0x8e, 0x65, 0xf5, 0x57, 0x70, 0x92, 0xc4, 0x2c, 0xd4, 0x2f, 0xa0, 0x7f, 0x2a, 0x05, 0x1f,
+	0xdc, 0x41, 0x82, 0x57, 0x50, 0xd9, 0xda, 0xdc, 0x42, 0x5b, 0xd0, 0x09, 0xa8, 0x1a, 0xa7, 0x9c,
+	0x12, 0xe7, 0x7c, 0x48, 0xb9, 0xa3, 0x86, 0xd4, 0x49, 0xa9, 0x14, 0xe3, 0x34, 0xa4, 0x0e, 0x11,
+	0x54, 0x3a, 0x5c, 0x28, 0x87, 0x7e, 0x62, 0x52, 0x79, 0xa8, 0x06, 0xd5, 0x1f, 0xb6, 0x35, 0x7f,
+	0x5c, 0xd3, 0x6f, 0xdc, 0x8b, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x2b, 0xb5, 0x89, 0xb6, 0xdc,
+	0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -600,6 +664,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ToDoServiceClient interface {
+	// Read all todo tasks
+	ReadAll(ctx context.Context, in *ReadAllRequest, opts ...grpc.CallOption) (*ReadAllResponse, error)
 	// Create new todo task
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	// Read todo task
@@ -608,8 +674,6 @@ type ToDoServiceClient interface {
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// Delete todo task
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
-	// Read all todo tasks
-	ReadAll(ctx context.Context, in *ReadAllRequest, opts ...grpc.CallOption) (*ReadAllResponse, error)
 }
 
 type toDoServiceClient struct {
@@ -618,6 +682,15 @@ type toDoServiceClient struct {
 
 func NewToDoServiceClient(cc *grpc.ClientConn) ToDoServiceClient {
 	return &toDoServiceClient{cc}
+}
+
+func (c *toDoServiceClient) ReadAll(ctx context.Context, in *ReadAllRequest, opts ...grpc.CallOption) (*ReadAllResponse, error) {
+	out := new(ReadAllResponse)
+	err := c.cc.Invoke(ctx, "/v1.ToDoService/ReadAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *toDoServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
@@ -656,17 +729,10 @@ func (c *toDoServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts 
 	return out, nil
 }
 
-func (c *toDoServiceClient) ReadAll(ctx context.Context, in *ReadAllRequest, opts ...grpc.CallOption) (*ReadAllResponse, error) {
-	out := new(ReadAllResponse)
-	err := c.cc.Invoke(ctx, "/v1.ToDoService/ReadAll", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ToDoServiceServer is the server API for ToDoService service.
 type ToDoServiceServer interface {
+	// Read all todo tasks
+	ReadAll(context.Context, *ReadAllRequest) (*ReadAllResponse, error)
 	// Create new todo task
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	// Read todo task
@@ -675,12 +741,48 @@ type ToDoServiceServer interface {
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// Delete todo task
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	// Read all todo tasks
-	ReadAll(context.Context, *ReadAllRequest) (*ReadAllResponse, error)
+}
+
+// UnimplementedToDoServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedToDoServiceServer struct {
+}
+
+func (*UnimplementedToDoServiceServer) ReadAll(ctx context.Context, req *ReadAllRequest) (*ReadAllResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadAll not implemented")
+}
+func (*UnimplementedToDoServiceServer) Create(ctx context.Context, req *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (*UnimplementedToDoServiceServer) Read(ctx context.Context, req *ReadRequest) (*ReadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
+}
+func (*UnimplementedToDoServiceServer) Update(ctx context.Context, req *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (*UnimplementedToDoServiceServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 
 func RegisterToDoServiceServer(s *grpc.Server, srv ToDoServiceServer) {
 	s.RegisterService(&_ToDoService_serviceDesc, srv)
+}
+
+func _ToDoService_ReadAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReadAllRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ToDoServiceServer).ReadAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ToDoService/ReadAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ToDoServiceServer).ReadAll(ctx, req.(*ReadAllRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ToDoService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -755,28 +857,14 @@ func _ToDoService_Delete_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ToDoService_ReadAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReadAllRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ToDoServiceServer).ReadAll(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ToDoService/ReadAll",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ToDoServiceServer).ReadAll(ctx, req.(*ReadAllRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _ToDoService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.ToDoService",
 	HandlerType: (*ToDoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ReadAll",
+			Handler:    _ToDoService_ReadAll_Handler,
+		},
 		{
 			MethodName: "Create",
 			Handler:    _ToDoService_Create_Handler,
@@ -793,43 +881,7 @@ var _ToDoService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Delete",
 			Handler:    _ToDoService_Delete_Handler,
 		},
-		{
-			MethodName: "ReadAll",
-			Handler:    _ToDoService_ReadAll_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "todo-service.proto",
-}
-
-func init() { proto.RegisterFile("todo-service.proto", fileDescriptor_todo_service_4f7b6d3911418310) }
-
-var fileDescriptor_todo_service_4f7b6d3911418310 = []byte{
-	// 413 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0xcd, 0x8e, 0xda, 0x30,
-	0x10, 0x56, 0x7e, 0x08, 0x30, 0x29, 0x81, 0xba, 0x3d, 0x44, 0x51, 0x55, 0x45, 0x3e, 0xd1, 0x43,
-	0x13, 0x91, 0x4a, 0x3d, 0xa1, 0xa2, 0x0a, 0x9e, 0x20, 0xa5, 0x0f, 0x10, 0xb0, 0x17, 0x59, 0x0a,
-	0x38, 0x9b, 0x18, 0x1e, 0x61, 0x5f, 0x7b, 0x57, 0x8e, 0x63, 0x20, 0xd1, 0x86, 0xcb, 0xde, 0x32,
-	0x9f, 0x67, 0xe6, 0xfb, 0xe6, 0x9b, 0x09, 0x20, 0xc1, 0x09, 0xff, 0x59, 0xd1, 0xf2, 0xc2, 0xf6,
-	0x34, 0x2a, 0x4a, 0x2e, 0x38, 0x32, 0x2f, 0x8b, 0x60, 0x2a, 0xd8, 0x91, 0x56, 0x22, 0x3b, 0x16,
-	0x0a, 0xc4, 0x2f, 0x06, 0xd8, 0x5b, 0xbe, 0xe1, 0xc8, 0x03, 0x93, 0x11, 0xdf, 0x08, 0x8d, 0xb9,
-	0x95, 0x9a, 0x8c, 0xa0, 0xaf, 0x30, 0x10, 0x4c, 0xe4, 0xd4, 0x37, 0x43, 0x63, 0x3e, 0x4e, 0x55,
-	0x80, 0x42, 0x70, 0x09, 0xad, 0xf6, 0x25, 0x2b, 0x04, 0xe3, 0x27, 0xdf, 0xaa, 0xdf, 0xee, 0x21,
-	0xf4, 0x1b, 0x46, 0x25, 0x3d, 0xb2, 0x13, 0xa1, 0xa5, 0x6f, 0x87, 0xc6, 0xdc, 0x4d, 0x82, 0xe8,
-	0xc0, 0xf9, 0x21, 0x6f, 0x64, 0xec, 0xce, 0x4f, 0xd1, 0x56, 0x8b, 0x48, 0xaf, 0xb9, 0x78, 0x05,
-	0x93, 0x75, 0x49, 0x33, 0x41, 0x53, 0xfa, 0x7c, 0xa6, 0x95, 0x40, 0x33, 0xb0, 0xb2, 0x82, 0xd5,
-	0x8a, 0xc6, 0xa9, 0xfc, 0x44, 0xdf, 0xc0, 0x16, 0x7c, 0xc3, 0x6b, 0x45, 0x6e, 0x32, 0x8a, 0x2e,
-	0x8b, 0x48, 0x4a, 0x4f, 0x6b, 0x14, 0x27, 0xe0, 0xe9, 0x06, 0x55, 0xc1, 0x4f, 0x15, 0x7d, 0xa7,
-	0x83, 0x1a, 0xd2, 0xd4, 0x43, 0xe2, 0x18, 0xdc, 0x94, 0x66, 0xa4, 0x9f, 0xb2, 0x5b, 0xf0, 0x07,
-	0x3e, 0xa9, 0x82, 0x5e, 0x8a, 0xc7, 0x22, 0x57, 0x30, 0xf9, 0x5f, 0x90, 0x0f, 0x4c, 0xb9, 0x04,
-	0x4f, 0x37, 0xe8, 0x95, 0xe0, 0xc3, 0xf0, 0x5c, 0xe7, 0x68, 0xe5, 0x3a, 0xc4, 0x0b, 0x98, 0x6c,
-	0x68, 0x4e, 0x1f, 0xd1, 0x77, 0x27, 0x5e, 0x82, 0xa7, 0x4b, 0x1e, 0x11, 0x92, 0x3a, 0xe7, 0x4a,
-	0xd8, 0x84, 0x18, 0x83, 0x27, 0xfd, 0xfa, 0x9b, 0xe7, 0xbd, 0x8c, 0x78, 0x0d, 0xd3, 0x6b, 0x4e,
-	0x2f, 0xc5, 0x77, 0x18, 0xc8, 0xf9, 0x2b, 0xdf, 0x0c, 0xad, 0x96, 0x2d, 0x0a, 0x4e, 0x5e, 0x0d,
-	0x70, 0x65, 0xfc, 0x4f, 0x9d, 0x3c, 0x8a, 0xc1, 0x51, 0xd7, 0x80, 0x3e, 0xcb, 0xd4, 0xd6, 0x69,
-	0x05, 0xe8, 0x1e, 0x6a, 0x28, 0x7f, 0x80, 0x2d, 0x55, 0xa0, 0xa9, 0x7c, 0xbb, 0x3b, 0x8a, 0x60,
-	0x76, 0x03, 0x9a, 0xd4, 0x18, 0x1c, 0xb5, 0x03, 0xd5, 0xbb, 0xb5, 0x50, 0xd5, 0xbb, 0xb3, 0xa2,
-	0x18, 0x1c, 0xe5, 0xa1, 0x2a, 0x68, 0xad, 0x40, 0x15, 0x74, 0x2c, 0x4e, 0x60, 0xd8, 0x58, 0x82,
-	0x90, 0xa6, 0xbf, 0x79, 0x18, 0x7c, 0x69, 0x61, 0xaa, 0x66, 0xe7, 0xd4, 0xbf, 0xd7, 0xaf, 0xb7,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x51, 0xf4, 0xfa, 0x5b, 0xfb, 0x03, 0x00, 0x00,
 }

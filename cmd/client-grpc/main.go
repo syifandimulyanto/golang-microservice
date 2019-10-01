@@ -41,7 +41,7 @@ func main() {
 	// Call Create
 	req1 := v1.CreateRequest{
 		Api: apiVersion,
-		ToDo: &v1.ToDo{
+		Todo: &v1.Todo{
 			Title:       "title (" + pfx + ")",
 			Description: "description (" + pfx + ")",
 			Reminder:    reminder,
@@ -69,11 +69,11 @@ func main() {
 	// Update
 	req3 := v1.UpdateRequest{
 		Api: apiVersion,
-		ToDo: &v1.ToDo{
-			Id:          res2.ToDo.Id,
-			Title:       res2.ToDo.Title,
-			Description: res2.ToDo.Description + " + updated",
-			Reminder:    res2.ToDo.Reminder,
+		Todo: &v1.Todo{
+			Id:          res2.Todo.Id,
+			Title:       res2.Todo.Title,
+			Description: res2.Todo.Description + " + updated",
+			Reminder:    res2.Todo.Reminder,
 		},
 	}
 	res3, err := c.Update(ctx, &req3)
